@@ -11,7 +11,7 @@ const dummyDatabase = {
     category: "televisions",
     photos: ["http://placekitten.com/200/287", "http://placekitten.com/200/299", "http://placekitten.com/200/300"],
     reviews: ["reviewId"]
-
+    
 }
 
 const dummyUserDataBase = [{
