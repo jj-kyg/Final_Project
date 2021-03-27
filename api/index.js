@@ -1,7 +1,7 @@
 // api router
 const express = require('express');
 const apiRouter = express.Router();
-const {getCustomerById} = require('../db');
+const {getCustomerById, getAllProducts} = require('../db');
 const jwt = require('jsonwebtoken');
 const { JWT_SECRET } = process.env;
 
@@ -40,15 +40,26 @@ apiRouter.use((req, res, next) => {
   next();
 });
 
-apiRouter.use('/', async (req, res, next) => {
-  
-})
-
 const health_checkRouter = require('./health_check');
 apiRouter.use('/health', health_checkRouter);
 
 const customersRouter = require('./customers');
 apiRouter.use('/customers', customersRouter);
+
+const productsRouter = require('./products');
+apiRouter.use('/products', productsRouter);
+
+const reviewsRouter = require('./reviews');
+apiRouter.use('/reviews', reviewsRouter);
+
+apiRouter.use('/', async (req, res) => {
+  try {
+    const products = await getAllProducts();
+    res.send(products);
+  } catch (error) {
+    throw(error)
+  }
+})
 
 apiRouter.use((error, req, res, next) => {
   res.status(500);

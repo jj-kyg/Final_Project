@@ -67,9 +67,21 @@ async function getReviewsByProduct(productId) {
   }
 }
 
+async function deleteReview(id){
+  try{
+    await client.query(`
+      DELETE FROM reviews
+      WHERE "reviewId"=$1
+    `, [id]);
+  } catch (error){
+    throw (error)
+  }
+}
+
 module.exports = {
   createReview,
   updateReview,
   getAllReviews,
-  getReviewsByProduct
+  getReviewsByProduct,
+  deleteReview
 }

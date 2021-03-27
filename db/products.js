@@ -86,9 +86,27 @@ async function getProductById(productId) {
   }
 }
 
+async function deleteProduct(id){
+  try{
+    const { rows: product } = await client.query(`
+      DELETE FROM products
+      WHERE id=$1
+      RETURNING *;
+    `, [id]);
+    await client.query(`
+      DELETE FROM reviews
+      WHERE "reviewId"=$1
+    `, [id]);
+    return product;
+  } catch (error){
+    throw (error)
+  }
+}
+
 module.exports = {
   getAllProducts,
   getProductById,
   updateProduct,
-  createProduct
+  createProduct,
+  deleteProduct
 };

@@ -3,7 +3,7 @@ const customersRouter = express.Router();
 const jwt = require("jsonwebtoken");
 
 const { JWT_SECRET } = process.env;
-const { createCustomer, getCustomerByUsername } = require("../db/customers");
+const { createCustomer, getCustomerByUsername, getAllCustomers } = require("../db/customers");
 const { requireUser } = require("./utils");
 
 // Customers
@@ -103,6 +103,15 @@ customersRouter.post("/login", async (req, res, next) => {
       }
   } catch(error) {
       next(error);
+  }
+});
+
+customersRouter.get("/manage_customers", async (req, res, next) => {
+  try {
+    const customers = await getAllCustomers();
+    res.send(customers);
+  } catch (error) {
+    throw(error);
   }
 });
 
