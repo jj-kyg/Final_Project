@@ -142,6 +142,96 @@ async function createInitialProducts() {
       featured: true,
       stock: 5,
     });
+    await createProduct({
+      isActive: true,
+      name: 'Two Heads On Gold',
+      artist: 'Jean Michel Basquiat',
+      img: 'https://trendland.com/wp-content/uploads/2013/02/jean-michel-basquiat-opening-at-gagosian-gallery-02.jpg',
+      description: 'Untitled (Two Heads on Gold), 1982, is a monumental diptych, more than ten feet wide. It is a double portrait of a skeletal, black man with staring eyes and bared teeth. Rage and fear power the composition, threatening to burst through the enforced stillness of the two figures and engulf the viewer.',
+      price: '$1899.00',
+      featured: true,
+      stock: 7
+    });
+    await createProduct({
+      isActive: true,
+      name: 'Morning Sun',
+      artist: 'Edward Hopper',
+      img: 'https://i.redd.it/pgs666pq69e61.jpg',
+      description: 'Edward Hopper was one of the early American artists to paint the experience of human isolation in the modern city. In Morning Sun, the woman – modeled after Hopper’s wife, Jo – faces the sun impassively and seemingly lost in thought. Her visible right eye appears sightless, emphasizing her isolation. The bare wall and elevation of the room above the street also suggest the bleakness and solitude of impersonal urban life.',
+      price: '$590.00',
+      featured: false,
+      stock: 11
+    });
+    await createProduct({
+      isActive: true,
+      name: 'Chuck 70',
+      artist: 'Andy Warhol',
+      img: 'https://i.redd.it/vxli9id07yo61.jpg',
+      description: 'Shoes played a prominent role in Warhol’s early career as a commercial artist. His 1950s adverts for women’s footwear were well recognised and his fetish for shoes and feet continued throughout his life. In the 1980s he returned to the motif as a source of inspiration for a series of screenprints which incorporated Chuck Taylor sneakers. This poster shows a young man gazing down on a pair of newish Chucks- reminiscent of still lifes.',
+      price: '$679.00',
+      featured: false,
+      stock: 5
+    });
+    await createProduct({
+      isActive: true,
+      name: 'Self Portrait',
+      artist: 'Jean Michel Basquiat',
+      img: 'https://i.redd.it/541w7b7zwpj61.jpg',
+      description: 'Basquiat was a charismatic, passionate artist, which is captured in the piercing gaze of this self-portrait. This is a portrait of a confident man, who know what he wanted to say to the world through his art. Painted with acrylic paint on an unframed canvas using a palette knife, the image uses texture to crackle with life.',
+      price: '$870.00',
+      featured: false,
+      stock: 3
+    });
+    await createProduct({
+      isActive: true,
+      name: 'Prayer',
+      artist: 'Marc Chagall',
+      img: 'https://i.redd.it/1h3262k5rml61.jpg',
+      description: 'Chagall took inspiration from Belarusian folk-life, and portrayed many Biblical themes reflecting his Jewish heritage. Prayer is a painting form Chagalls “Blue Period”, in which he turned to using a livelier palette for his work',
+      price: '$760.00',
+      featured: false,
+      stock: 5
+    });
+    await createProduct({
+      isActive: true,
+      name: 'The Self-Seers II, Man and Death',
+      artist: 'Egon Schiele',
+      img: 'https://i.redd.it/lxqbdddp2vr01.jpg',
+      description: 'A great innovator of modern figure painting, Egon Schiele is known for creating erotic and deeply psychological portraits, on many occasions using himself as the subject. Schiele often used color sparingly, his work identifiable instead by his characteristic sinuous black line. In his many self-portraits, Schiele is typically nude and staring directly towards the viewer, making the works both revealing and confrontational. Schiele’s subjects, as in “The Self-Seers”,  are often portayed with their bodies in various contorted positions. Whether representing himself or others, Schiele’s pictures are strikingly raw and direct.',
+      price: '$1299.00',
+      featured: true,
+      stock: 3
+    });
+    await createProduct({
+      isActive: true,
+      name: 'Native American in Flowers and Feathers',
+      artist: 'Alphonse Mucha',
+      img: 'https://i.redd.it/u8bzkhhony461.jpg',
+      description: 'Renowned for his posters, Czech artist Alfons Mucha became an international star when his posters featuring Sarah Bernhardt were released. His visual language is characteristic of art nouveau, interspersed with floral patterns and curved lines. His “Native American in Flowers and Feathers saw Mucha branching out into the realist realm.',
+      price: '$250.00',
+      featured: fals,
+      stock: 5
+    });
+    await createProduct({
+      isActive: true,
+      name: 'Masks',
+      artist: 'James Ensor',
+      img: 'https://i.redd.it/6glzux8uzzp41.jpg',
+      description: 'Subjects such as carnivals, masks, puppetry, skeletons, and fantastic allegories are dominant in Ensor’s mature work. Ensor dressed skeletons up in his studio and arranged them in colorful, enigmatic tableaux on the canvas, and used masks as a theatrical aspect in his still life paintings. Attracted by masks’ plastic forms, bright colors, and potential for psychological impact, he created a format in which he could paint with complete freedom. For Ensor, while the mask hides the identity of individuals it nevertheless exposes the wearer’s true personality – malicious, giddy, foolish. It is not, in this sense, a mask at all. “Masks” is one of the finest represenations of Ensor’s work.',
+      price: '$1099.00',
+      featured: true,
+      stock: 5
+    });
+    await createProduct({
+      isActive: true,
+      name: 'The Intrigue',
+      artist: 'James Ensor',
+      img: 'https://i.redd.it/vi4pcl0lvls41.jpg',
+      description: 'Weeping Woman is based on an image of a woman holding her dead child. It is taken from Picasso’s anti-war mural, Guernica. Picasso painted both works during the Spanish Civil War (1936-39). It was in response to the bombing of the Basque town of Guernica. The attack was carried out in April 1937 by Nazi Germany’s air force, in support of Spain’s Nationalist forces. Hundreds of people were killed. The figure of the Weeping Woman is based on artist and photographer Dora Maar. Maar photographed Picasso’s making of Guernica.',
+      price: '$1937.00',
+      featured: true,
+      stock: 5
+    });
 
     console.log("Finished creating products!");
   } catch (error) {
