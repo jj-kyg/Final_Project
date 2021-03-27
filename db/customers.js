@@ -50,6 +50,18 @@ async function createCustomer({
   }
 }
 
+async function getAllCustomers() {
+  try {
+    const { rows } = await client.query(`
+      SELECT *
+      FROM customers;
+    `)
+    return rows;
+  } catch (error) {
+    throw error;
+  }
+}
+
 async function getCustomerById(id) {
   try {
     const { rows: [ customer ] } = await client.query(`
@@ -76,8 +88,33 @@ async function getCustomerByUsername(username) {
   }
 }
 
+async function updateCustomer(id, fields = {}) {
+  const setString = Object.keys(fields).map(
+    (key, index) => `"${ key }"=$${ index + 1 }`
+  ).join(', ');
+  
+  if (setString === 0) {
+    return;
+  }
+
+  try {
+    const { rows: [ customer ] } = await client.query(`
+      UPDATE customers
+      SET ${ setString }
+      WHERE id=${ id }
+      RETURNING *;
+    `, Object.values(fields));
+
+    return customer;
+  } catch (error) {
+    throw error;
+  }
+}
+
 module.exports = {
   createCustomer,
   getCustomerById,
-  getCustomerByUsername
+  getCustomerByUsername,
+  getAllCustomers,
+  updateCustomer
 }
