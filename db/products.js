@@ -54,10 +54,14 @@ async function updateProduct(id, fields = {}) {
 
 async function getAllProducts() {
   try {
-    const { rows } = await client.query(`
-      SELECT * FROM products;
+    const { rows: productIds } = await client.query(`
+      SELECT id FROM products;
     `);
-    return rows;
+
+    const products = await Promise.all(productIds.map(
+      product => getProductById(product.id)
+    ))
+    return products;
   } catch (error) {
     throw error;
   }
@@ -72,6 +76,13 @@ async function getProductById(productId) {
       WHERE id=${productId};
     `);
 
+    const {rows: keywords } = await client.query(`
+      SELECT keywords.* 
+      FROM keywords
+      JOIN product_keywords ON keywords.id=product_keywords."keywordId"
+      WHERE product_keywords."productId"=$1;
+    `, [productId])
+
     if (!product) {
       return;
     } else {
@@ -79,6 +90,7 @@ async function getProductById(productId) {
       const categories = await getCategoriesByProduct(productId);
       product.reviews = reviews;
       product.categories = categories;
+      product.keywords = keywords;
       return product;
     }
   } catch (error) {

@@ -1,9 +1,10 @@
 // require in the database adapter functions
 const client = require('./client');
 const { createCustomer, getCustomerById } = require('./customers');
-const { createProduct } = require('./products');
+const { createProduct, getAllProducts } = require('./products');
 const { createReview } = require('./reviews');
 const { createCategory } = require('./categories');
+const { createKeywords, addKeywordsToProduct } = require('./keywords');
 
 async function dropTables() {
   console.log("Dropping All Tables...");
@@ -14,6 +15,7 @@ async function dropTables() {
       DROP TABLE IF EXISTS keywords;
       DROP TABLE IF EXISTS categories;
       DROP TABLE IF EXISTS reviews;
+      DROP TABLE IF EXISTS orders;
       DROP TABLE IF EXISTS products;
       DROP TABLE IF EXISTS customers;
 `);
@@ -56,6 +58,14 @@ async function createTables() {
       stock INTEGER NOT NULL
     );
 
+    CREATE TABLE orders (
+      id SERIAL PRIMARY KEY,
+      "orderId" INTEGER REFERENCES customers(id) NOT NULL,
+      "productId" INTEGER REFERENCES products(id),
+      quantity INTEGER NOT NULL,
+      subtotal INTEGER
+    );
+
     CREATE TABLE reviews (
       id SERIAL PRIMARY KEY,
       "reviewId" INTEGER REFERENCES products(id) NOT NULL,
@@ -77,9 +87,11 @@ async function createTables() {
     );
     
     CREATE TABLE product_keywords (
-      "productId" INTEGER REFERENCES products(id) UNIQUE,
-      "keywordId" INTEGER REFERENCES keywords(id) UNIQUE
+      "productId" INTEGER REFERENCES products(id),
+      "keywordId" INTEGER REFERENCES keywords(id),
+      UNIQUE ("productId", "keywordId")
     );
+
 `);
     console.log("Finished building tables!");
   } catch (error) {
@@ -126,7 +138,7 @@ async function createInitialProducts() {
       isActive: true,
       name: 'Weeping Woman',
       artist: 'Pablo Picasso',
-      description: 'Weeping Woman is based on an image of a woman holding her dead child. It is taken from Picasso’s anti-war mural, Guernica. Picasso painted both works during the Spanish Civil War (1936-39). It was in response to the bombing of the Basque town of Guernica. The attack was carried out in April 1937 by Nazi Germany’s air force, in support of Spain\'s Nationalist forces. Hundreds of people were killed. The figure of the Weeping Woman is based on artist and photographer Dora Maar. Maar photographed Picasso\'s making of Guernica.',
+      description: 'Weeping Woman is based on an image of a woman holding her dead child. It is taken from Picasso\'s anti-war mural, Guernica. Picasso painted both works during the Spanish Civil War (1936-39). It was in response to the bombing of the Basque town of Guernica. The attack was carried out in April 1937 by Nazi Germany\'s air force, in support of Spain\'s Nationalist forces. Hundreds of people were killed. The figure of the Weeping Woman is based on artist and photographer Dora Maar. Maar photographed Picasso\'s making of Guernica.',
       img: 'https://www.pablopicasso.org/images/paintings/the-weeping-woman.jpg',
       price: '$1937.00',
       featured: true,
@@ -164,16 +176,6 @@ async function createInitialProducts() {
     });
     await createProduct({
       isActive: true,
-      name: 'Chuck 70',
-      artist: 'Andy Warhol',
-      img: 'https://i.redd.it/vxli9id07yo61.jpg',
-      description: 'Shoes played a prominent role in Warhol’s early career as a commercial artist. His 1950s adverts for women’s footwear were well recognised and his fetish for shoes and feet continued throughout his life. In the 1980s he returned to the motif as a source of inspiration for a series of screenprints which incorporated Chuck Taylor sneakers. This poster shows a young man gazing down on a pair of newish Chucks- reminiscent of still lifes.',
-      price: '$679.00',
-      featured: false,
-      stock: 5
-    });
-    await createProduct({
-      isActive: true,
       name: 'Self Portrait',
       artist: 'Jean Michel Basquiat',
       img: 'https://i.redd.it/541w7b7zwpj61.jpg',
@@ -181,16 +183,6 @@ async function createInitialProducts() {
       price: '$870.00',
       featured: false,
       stock: 3
-    });
-    await createProduct({
-      isActive: true,
-      name: 'Prayer',
-      artist: 'Marc Chagall',
-      img: 'https://i.redd.it/1h3262k5rml61.jpg',
-      description: 'Chagall took inspiration from Belarusian folk-life, and portrayed many Biblical themes reflecting his Jewish heritage. Prayer is a painting form Chagalls “Blue Period”, in which he turned to using a livelier palette for his work',
-      price: '$760.00',
-      featured: false,
-      stock: 5
     });
     await createProduct({
       isActive: true,
@@ -207,14 +199,14 @@ async function createInitialProducts() {
       name: 'Native American in Flowers and Feathers',
       artist: 'Alphonse Mucha',
       img: 'https://i.redd.it/u8bzkhhony461.jpg',
-      description: 'Renowned for his posters, Czech artist Alfons Mucha became an international star when his posters featuring Sarah Bernhardt were released. His visual language is characteristic of art nouveau, interspersed with floral patterns and curved lines. His “Native American in Flowers and Feathers saw Mucha branching out into the realist realm.',
+      description: 'Renowned for his posters, Czech artist Alfons Mucha became an international star when his posters featuring Sarah Bernhardt were released. His visual language is characteristic of art nouveau, interspersed with floral patterns and curved lines. His Native American in Flowers and Feathers saw Mucha branching out into the realist realm.',
       price: '$250.00',
-      featured: fals,
+      featured: false,
       stock: 5
     });
     await createProduct({
       isActive: true,
-      name: 'Masks',
+      name: 'Masks Watching Turtle',
       artist: 'James Ensor',
       img: 'https://i.redd.it/6glzux8uzzp41.jpg',
       description: 'Subjects such as carnivals, masks, puppetry, skeletons, and fantastic allegories are dominant in Ensor’s mature work. Ensor dressed skeletons up in his studio and arranged them in colorful, enigmatic tableaux on the canvas, and used masks as a theatrical aspect in his still life paintings. Attracted by masks’ plastic forms, bright colors, and potential for psychological impact, he created a format in which he could paint with complete freedom. For Ensor, while the mask hides the identity of individuals it nevertheless exposes the wearer’s true personality – malicious, giddy, foolish. It is not, in this sense, a mask at all. “Masks” is one of the finest represenations of Ensor’s work.',
@@ -269,6 +261,51 @@ async function createInitialCategories() {
   }
 }
 
+async function createInitialKeywords() {
+  try {
+    console.log("Starting to create keywords...");
+
+    const [canvas, oil, prints, framed, mini, small, medium, large, oversized, giant, reds, oranges, yellows, greens, blues, purples, neutrals, browns, greys, bs] = await createKeywords([
+      '#canvas',
+      '#oil',
+      '#prints',
+      '#framed',
+      '#mini (e.g. 8" x 10")',
+      '#small (e.g. 12" x 18")',
+      '#medium (e.g. 18" x 24")',
+      '#large (e.g. 24" x 36")',
+      '#oversized (e.g. 36" x 48")',
+      '#giant (e.g. 48" x 64")',
+      '#reds',
+      '#oranges',
+      '#yellows',
+      '#greens',
+      '#blues',
+      '#purples',
+      '#neutrals',
+      '#browns',
+      '#greys',
+      '#black & white'
+    ]);
+
+    const [product1, product2, product3, product4, product5, product6, product7, product8, product9] = await getAllProducts();
+
+    await addKeywordsToProduct(product1.id, [yellows]);
+    await addKeywordsToProduct(product2.id, [oil, canvas]);
+    await addKeywordsToProduct(product3.id, [giant]);
+    await addKeywordsToProduct(product4.id, [oil]);
+    await addKeywordsToProduct(product5.id, [oversized, oil, canvas]);
+    await addKeywordsToProduct(product6.id, [oil, canvas, large, browns]);
+    await addKeywordsToProduct(product7.id, [oil]);
+    await addKeywordsToProduct(product8.id, [prints]);
+    await addKeywordsToProduct(product9.id, [oil, canvas, mini]);
+    console.log("Finished creating keywords!");
+  } catch (error) {
+    console.log("Error creating keywords!");
+    throw error;
+  }
+}
+
 async function rebuildDB() {
   try {
     client.connect();
@@ -278,6 +315,7 @@ async function rebuildDB() {
     await createInitialProducts();
     await createInitialReviews();
     await createInitialCategories();
+    await createInitialKeywords();
   } catch (error) {
     console.log('Error during rebuildDB')
     throw error;

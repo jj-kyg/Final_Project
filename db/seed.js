@@ -1,7 +1,7 @@
 const client = require('./client');
 const { rebuildDB } = require('./seedData');
 const { getAllCustomers, updateCustomer } = require('./customers');
-const { getAllProducts, getProductById } = require('./products');
+const { getAllProducts, getProductById, updateProduct } = require('./products');
 
 async function testdB() {
   try {
@@ -16,6 +16,13 @@ async function testdB() {
     console.log("Calling getAllProducts");
     const products = await getAllProducts();
     console.log("getAllProducts:", products);
+
+    console.log("Calling updateProduct on product[0]");
+    const updatedProduct = await updateProduct(products[0].id, {
+      price: '1937.99',
+      stock: 4
+    });
+    console.log("updateProduct:", updatedProduct);
 
     console.log("Calling getProductById");
     const product = await getProductById(2);

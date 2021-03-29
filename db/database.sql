@@ -39,28 +39,21 @@ CREATE TABLE categories (
   description VARCHAR(255)
 );
 
-CREATE TABLE keywords (
-  id SERIAL PRIMARY KEY,
-  name VARCHAR(255) UNIQUE NOT NULL
-);
-
+ CREATE TABLE keywords (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) UNIQUE NOT NULL
+  );
+    
 CREATE TABLE product_keywords (
-  "productId" INTEGER REFERENCES products(id) UNIQUE,
-  "keywordId" INTEGER REFERENCES keywords(id) UNIQUE
+  "productId" INTEGER REFERENCES products(id),
+  "keywordId" INTEGER REFERENCES keywords(id),
+  UNIQUE ("productId", "keywordId")
 );
 
-CREATE TABLE order_art (
+CREATE TABLE orders (
   id SERIAL PRIMARY KEY,
-  date DATE,
-  "customerId" INTEGER REFERENCES customers(id),
-  "shipmentDate" DATE NOT NULL,
-  "deliveryStatus" BOOLEAN
-);
-
-CREATE TABLE order_description (
-  id SERIAL PRIMARY KEY,
+  "orderId" INTEGER REFERENCES customers(id) NOT NULL,
+  "productId" INTEGER REFERENCES products(id),
   quantity INTEGER,
-  price INTEGER,
-  "orderId" INTEGER REFERENCES order_art(id), 
-  total INTEGER
+  subtotal INTEGER
 );
