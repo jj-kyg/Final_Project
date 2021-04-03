@@ -55,6 +55,12 @@ apiRouter.use('/reviews', reviewsRouter);
 const keywordsRouter = require('./keywords');
 apiRouter.use('/keywords', keywordsRouter);
 
+const ordersRouter = require('./orders');
+apiRouter.use('/orders', ordersRouter);
+
+const shoppingCartRouter = require('./shoppingCart');
+apiRouter.use('/shopping_cart', shoppingCartRouter);
+
 apiRouter.use('/', async (req, res) => {
   try {
     const products = await getAllProducts();

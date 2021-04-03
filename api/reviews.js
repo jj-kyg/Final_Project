@@ -32,8 +32,8 @@ reviewsRouter.patch("/:reviewId", async (req, res, next) => {
 });
 
 reviewsRouter.delete('/:reviewId', async(req, res, next) => {
+  const { reviewId } = req.params;
   try {
-    const { reviewId } = req.params 
     const deletedReview = await deleteReview(reviewId);
     res.send(deletedReview);
   } catch (error) {

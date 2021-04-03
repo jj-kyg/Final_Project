@@ -15,7 +15,7 @@ function requireAdmin(req, res, next) {
     res.status(401)
     next({
       name: "MissingUserError",
-      message: "You must be logged in asAdmin perform this action"
+      message: "You must be logged in as an Admin to perform this action"
     });
   }
   

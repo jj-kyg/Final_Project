@@ -54,6 +54,7 @@ CREATE TABLE orders (
   id SERIAL PRIMARY KEY,
   "orderId" INTEGER REFERENCES customers(id) NOT NULL,
   "productId" INTEGER REFERENCES products(id),
+  status VARCHAR(255) NOT NULL,
   quantity INTEGER,
   subtotal INTEGER
 );
