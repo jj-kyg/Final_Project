@@ -1,5 +1,5 @@
-function requireUser(req, res, next) {
-  if (!req.user) {
+function requireCustomer(req, res, next) {
+  if (!req.customer) {
     res.status(401)
     next({
       name: "MissingUserError",
@@ -11,7 +11,7 @@ function requireUser(req, res, next) {
 }
 
 function requireAdmin(req, res, next) {
-  if (!req.user) {
+  if (!req.customer) {
     res.status(401)
     next({
       name: "MissingUserError",
@@ -23,5 +23,6 @@ function requireAdmin(req, res, next) {
 }
 
 module.exports = {
-  requireUser
+  requireCustomer,
+  requireAdmin
 }

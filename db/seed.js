@@ -1,7 +1,7 @@
 const client = require('./client');
 const { rebuildDB } = require('./seedData');
 const { getAllCustomers, updateCustomer } = require('./customers');
-const { getAllProducts, getProductById, updateProduct } = require('./products');
+const { getAllProducts, getProductById, updateProduct, getProductsByKeyword } = require('./products');
 
 async function testdB() {
   try {
@@ -27,6 +27,16 @@ async function testdB() {
     console.log("Calling getProductById");
     const product = await getProductById(2);
     console.log("getProductById", product);
+
+    console.log("Calling updateProduct on products[1], only updating keywords");
+    const updateProductKeywordResult = await updateProduct(products[1].id, {
+      keywords: ['oil', 'canvas']
+    });
+    console.log("updateProduct:", updateProductKeywordResult);
+
+    console.log("Calling getProductsByKeyword with oil");
+    const productsWithOil = await getProductsByKeyword('oil');
+    console.log("Result:", productsWithOil);
     console.log("Finished database tests!");
   } catch (error) {
     throw error;
