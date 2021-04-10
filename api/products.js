@@ -1,8 +1,9 @@
 const express = require("express");
 const productsRouter = express.Router();
 const { createProduct, updateProduct, deleteProduct } = require("../db");
+const { requireAdmin } = require("./utils");
 
-productsRouter.post("/", async (req, res, next) => {
+productsRouter.post("/", requireAdmin, async (req, res, next) => {
   const {
     isActive,
     name,
@@ -47,7 +48,7 @@ productsRouter.post("/", async (req, res, next) => {
   }
 });
 
-productsRouter.patch("/:productId", async (req, res, next) => {
+productsRouter.patch("/:productId", requireAdmin, async (req, res, next) => {
   const { productId } = req.params;
   const {
     isActive,
@@ -107,7 +108,7 @@ productsRouter.patch("/:productId", async (req, res, next) => {
   }
 });
 
-productsRouter.delete('/:productId', async(req, res, next) => {
+productsRouter.delete('/:productId', requireAdmin, async(req, res, next) => {
   try {
     const { productId } = req.params 
     const deletedProduct = await deleteProduct(productId);

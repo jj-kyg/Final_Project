@@ -2,8 +2,9 @@ const express = require("express");
 const keywordsRouter = express.Router();
 
 const {getAllKeywords} = require('../db');
+const { requireAdmin } = require("./utils");
 
-keywordsRouter.get('/', async (req, res, next) => {
+keywordsRouter.get('/', requireAdmin, async (req, res, next) => {
   try {
     const keywords = await getAllKeywords();
     if (keywords) {

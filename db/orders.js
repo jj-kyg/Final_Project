@@ -3,15 +3,16 @@ const client = require("./client");
 async function createOrder({
   orderId,
   productId,
+  status,
   quantity,
   subtotal
 }) {
   try {
     const { rows: [order] } = await client.query(`
-      INSERT INTO orders ("orderId", "productId", quantity, subtotal)
-      VALUES ($1, $2, $3, $4)
+      INSERT INTO orders ("orderId", "productId", status, quantity, subtotal)
+      VALUES ($1, $2, $3, $4, $5)
       RETURNING *;
-    `, [orderId, productId, quantity, subtotal]);
+    `, [orderId, productId, status, quantity, subtotal]);
     return order;
   } catch (error) {
     throw error;
@@ -39,7 +40,7 @@ async function updateOrder(id, fields = {}) {
     `,
       Object.values(fields)
     );
-
+      console.log(order)
     return order;
   } catch (error) {
     throw error;
@@ -48,10 +49,13 @@ async function updateOrder(id, fields = {}) {
 
 async function deleteOrder(id){
   try{
-    await client.query(`
-      DELETE FROM reviews
-      WHERE "orderId"=$1
+    const { rows: [ deletedOrder ] } = await client.query(`
+      DELETE FROM orders
+      WHERE id=$1
+      RETURNING *;
     `, [id]);
+    console.log(deletedOrder);
+    return deletedOrder; 
   } catch (error){
     throw (error)
   }

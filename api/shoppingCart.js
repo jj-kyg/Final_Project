@@ -1,5 +1,6 @@
 const express = require("express");
 const shoppingCartRouter = express.Router();
+const { getOrdersByCustomer, updateOrder } = require('../db');
 
 shoppingCartRouter.get('/:customerId', async (req, res) => {
   const { customerId } = req.params;
@@ -13,11 +14,12 @@ shoppingCartRouter.get('/:customerId', async (req, res) => {
 
 shoppingCartRouter.patch("/:orderId", async (req, res, next) => {
   const { orderId } = req.params;
-
+  console.log(req.body)
   try {
     const updatedOrder = await updateOrder(orderId, req.body);
     res.send(updatedOrder);
   } catch (error) {
+    console.error(error);
     next(error);
   }
 });
@@ -33,4 +35,4 @@ shoppingCartRouter.delete('/:orderId', async(req, res, next) => {
 });
 
 
-module.export = shoppingCartRouter;
+module.exports = shoppingCartRouter;

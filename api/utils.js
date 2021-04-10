@@ -3,7 +3,7 @@ function requireCustomer(req, res, next) {
     res.status(401)
     next({
       name: "MissingUserError",
-      message: "You must be logged in perform this action"
+      message: "You must be logged in to perform this action"
     });
   }
   
@@ -11,7 +11,7 @@ function requireCustomer(req, res, next) {
 }
 
 function requireAdmin(req, res, next) {
-  if (!req.customer) {
+  if (!req.customer.isAdmin) {
     res.status(401)
     next({
       name: "MissingUserError",

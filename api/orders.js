@@ -1,15 +1,7 @@
 const express = require("express");
 const ordersRouter = express.Router();
-const {getAllOrders, getOrdersByCustomer, deleteOrder} = require('../db');
-
-ordersRouter.get('/', async (req, res) => {
-  try {
-    const orders = await getAllOrders();
-    res.send(orders);
-  } catch (error) {
-    throw(error)
-  }
-});
+const {getOrdersByCustomer, deleteOrder} = require('../db');
+const { requireCustomer } = require("./utils");
 
 ordersRouter.get('/:customerId', async (req, res) => {
   const { customerId } = req.params;
@@ -17,7 +9,17 @@ ordersRouter.get('/:customerId', async (req, res) => {
     const orders = await getOrdersByCustomer(customerId);
     res.send(orders);
   } catch (error) {
-    throw(error)
+    throw(error);
+  }
+});
+
+ordersRouter.get('/order_summary/:customerId', requireCustomer, async(req, res, next) => {
+  const { customerId } = req.params;
+  try {
+    const orderSummary = await getOrdersByCustomer(customerId);
+    res.send(orderSummary);
+  } catch (error) {
+    throw(error);
   }
 });
 

@@ -4,6 +4,7 @@ const { createCustomer, getCustomerById } = require('./customers');
 const { createProduct } = require('./products');
 const { createReview } = require('./reviews');
 const { createCategory } = require('./categories');
+const { createOrder } = require('./orders');
 
 async function dropTables() {
   console.log("Dropping All Tables...");
@@ -41,7 +42,7 @@ async function createTables() {
       postal INTEGER,
       city VARCHAR(255),
       phone VARCHAR(255),
-      "isActive" BOOLEAN DEFAULT 'false',
+      "isActive" BOOLEAN DEFAULT 'true',
       "isAdmin" BOOLEAN DEFAULT 'false'
     );
 
@@ -61,8 +62,9 @@ async function createTables() {
       id SERIAL PRIMARY KEY,
       "orderId" INTEGER REFERENCES customers(id) NOT NULL,
       "productId" INTEGER REFERENCES products(id),
-      quantity INTEGER NOT NULL,
-      subtotal INTEGER
+      status VARCHAR(255) NOT NULL,
+      quantity INTEGER,
+      subtotal VARCHAR(255) NOT NULL
     );
 
     CREATE TABLE reviews (
@@ -261,6 +263,42 @@ async function createInitialCategories() {
   }
 }
 
+async function createInitialOrders() {
+  try {
+    console.log("Starting to create orders...");
+    await createOrder({
+      orderId: 2,
+      productId: 8,
+      status: "created",
+      quantity: 1,
+      subtotal: "$1809.00"
+    });
+    await createOrder({
+      orderId: 1,
+      productId: 7,
+      status: "processing",
+      quantity: 2,
+      subtotal: "$1450.00"
+    });
+    await createOrder({
+      orderId: 1,
+      productId: 4,
+      status: "cancelled",
+      quantity: 1,
+      subtotal: "$1809.00"
+    });
+    await createOrder({
+      orderId: 2,
+      productId: 3,
+      status: "completed",
+      quantity: 1,
+      subtotal: "$1120.00"
+    });
+  } catch (error) {
+    console.error("Error creating orders!");
+  }
+}
+
 async function rebuildDB() {
   try {
     client.connect();
@@ -270,6 +308,7 @@ async function rebuildDB() {
     await createInitialProducts();
     await createInitialReviews();
     await createInitialCategories();
+    await createInitialOrders();
   } catch (error) {
     console.log('Error during rebuildDB')
     throw error;
