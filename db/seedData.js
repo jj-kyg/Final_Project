@@ -1,10 +1,10 @@
 // require in the database adapter functions
 const client = require('./client');
 const { createCustomer, getCustomerById } = require('./customers');
-const { createProduct, getAllProducts } = require('./products');
+const { createProduct } = require('./products');
 const { createReview } = require('./reviews');
 const { createCategory } = require('./categories');
-const { createKeywords, addKeywordsToProduct } = require('./keywords');
+const { createOrder } = require('./orders');
 
 async function dropTables() {
   console.log("Dropping All Tables...");
@@ -42,7 +42,7 @@ async function createTables() {
       postal INTEGER,
       city VARCHAR(255),
       phone VARCHAR(255),
-      "isActive" BOOLEAN DEFAULT 'false',
+      "isActive" BOOLEAN DEFAULT 'true',
       "isAdmin" BOOLEAN DEFAULT 'false'
     );
 
@@ -62,8 +62,9 @@ async function createTables() {
       id SERIAL PRIMARY KEY,
       "orderId" INTEGER REFERENCES customers(id) NOT NULL,
       "productId" INTEGER REFERENCES products(id),
-      quantity INTEGER NOT NULL,
-      subtotal INTEGER
+      status VARCHAR(255) NOT NULL,
+      quantity INTEGER,
+      subtotal VARCHAR(255) NOT NULL
     );
 
     CREATE TABLE reviews (
@@ -222,7 +223,8 @@ async function createInitialProducts() {
       description: 'Weeping Woman is based on an image of a woman holding her dead child. It is taken from Picasso’s anti-war mural, Guernica. Picasso painted both works during the Spanish Civil War (1936-39). It was in response to the bombing of the Basque town of Guernica. The attack was carried out in April 1937 by Nazi Germany’s air force, in support of Spain’s Nationalist forces. Hundreds of people were killed. The figure of the Weeping Woman is based on artist and photographer Dora Maar. Maar photographed Picasso’s making of Guernica.',
       price: '$1937.00',
       featured: true,
-      stock: 5
+      stock: 5,
+      keywords: ['yellows', 'oil']
     });
 
     console.log("Finished creating products!");
@@ -261,48 +263,39 @@ async function createInitialCategories() {
   }
 }
 
-async function createInitialKeywords() {
+async function createInitialOrders() {
   try {
-    console.log("Starting to create keywords...");
-
-    const [canvas, oil, prints, framed, mini, small, medium, large, oversized, giant, reds, oranges, yellows, greens, blues, purples, neutrals, browns, greys, bs] = await createKeywords([
-      '#canvas',
-      '#oil',
-      '#prints',
-      '#framed',
-      '#mini (e.g. 8" x 10")',
-      '#small (e.g. 12" x 18")',
-      '#medium (e.g. 18" x 24")',
-      '#large (e.g. 24" x 36")',
-      '#oversized (e.g. 36" x 48")',
-      '#giant (e.g. 48" x 64")',
-      '#reds',
-      '#oranges',
-      '#yellows',
-      '#greens',
-      '#blues',
-      '#purples',
-      '#neutrals',
-      '#browns',
-      '#greys',
-      '#black & white'
-    ]);
-
-    const [product1, product2, product3, product4, product5, product6, product7, product8, product9] = await getAllProducts();
-
-    await addKeywordsToProduct(product1.id, [yellows]);
-    await addKeywordsToProduct(product2.id, [oil, canvas]);
-    await addKeywordsToProduct(product3.id, [giant]);
-    await addKeywordsToProduct(product4.id, [oil]);
-    await addKeywordsToProduct(product5.id, [oversized, oil, canvas]);
-    await addKeywordsToProduct(product6.id, [oil, canvas, large, browns]);
-    await addKeywordsToProduct(product7.id, [oil]);
-    await addKeywordsToProduct(product8.id, [prints]);
-    await addKeywordsToProduct(product9.id, [oil, canvas, mini]);
-    console.log("Finished creating keywords!");
+    console.log("Starting to create orders...");
+    await createOrder({
+      orderId: 2,
+      productId: 8,
+      status: "created",
+      quantity: 1,
+      subtotal: "$1809.00"
+    });
+    await createOrder({
+      orderId: 1,
+      productId: 7,
+      status: "processing",
+      quantity: 2,
+      subtotal: "$1450.00"
+    });
+    await createOrder({
+      orderId: 1,
+      productId: 4,
+      status: "cancelled",
+      quantity: 1,
+      subtotal: "$1809.00"
+    });
+    await createOrder({
+      orderId: 2,
+      productId: 3,
+      status: "completed",
+      quantity: 1,
+      subtotal: "$1120.00"
+    });
   } catch (error) {
-    console.log("Error creating keywords!");
-    throw error;
+    console.error("Error creating orders!");
   }
 }
 
@@ -315,7 +308,7 @@ async function rebuildDB() {
     await createInitialProducts();
     await createInitialReviews();
     await createInitialCategories();
-    await createInitialKeywords();
+    await createInitialOrders();
   } catch (error) {
     console.log('Error during rebuildDB')
     throw error;

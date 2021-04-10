@@ -9,7 +9,7 @@ CREATE TABLE customers (
   postal INTEGER,
   city VARCHAR(255) DEFAULT '',
   phone VARCHAR(255) DEFAULT '',
-  "isActive" BOOLEAN DEFAULT 'false',
+  "isActive" BOOLEAN DEFAULT 'true',
   "isAdmin" Boolean DEFAULT 'false'
 );
 
@@ -26,7 +26,7 @@ CREATE TABLE products (
 
 CREATE TABLE reviews (
   id SERIAL PRIMARY KEY,
-  username VARCHAR(255),
+  username VARCHAR(255) REFERENCES customers(username),
   rating INTEGER,
   description TEXT,
   "reviewId" INTEGER REFERENCES products(id) NOT NULL
@@ -54,6 +54,7 @@ CREATE TABLE orders (
   id SERIAL PRIMARY KEY,
   "orderId" INTEGER REFERENCES customers(id) NOT NULL,
   "productId" INTEGER REFERENCES products(id),
+  status VARCHAR(255) NOT NULL,
   quantity INTEGER,
-  subtotal INTEGER
+  subtotal VARCHAR(255) NOT NULL
 );

@@ -1,4 +1,5 @@
 // api router
+require('dotenv').config();
 const express = require('express');
 const apiRouter = express.Router();
 const {getCustomerById, getAllProducts} = require('../db');
@@ -17,10 +18,9 @@ apiRouter.use(async (req, res, next) => {
     try {
       // recover the data
       const { id } = jwt.verify(token, JWT_SECRET);
-      
       if (id) {
-          req.user = await getCustomerById(id);
-          next();
+        req.customer = await getCustomerById(id);
+        next();
       }
     } catch ({ name, message }) {
       next({ name, message });
@@ -34,8 +34,8 @@ apiRouter.use(async (req, res, next) => {
 });
 
 apiRouter.use((req, res, next) => {
-  if (req.user) {
-    console.log("Customer is set:", req.user);
+  if (req.customer) {
+    console.log("Customer is set:", req.customer);
   }
   next();
 });
@@ -51,6 +51,18 @@ apiRouter.use('/products', productsRouter);
 
 const reviewsRouter = require('./reviews');
 apiRouter.use('/reviews', reviewsRouter);
+
+const keywordsRouter = require('./keywords');
+apiRouter.use('/keywords', keywordsRouter);
+
+const ordersRouter = require('./orders');
+apiRouter.use('/orders', ordersRouter);
+
+const shoppingCartRouter = require('./shoppingCart');
+apiRouter.use('/shopping_cart', shoppingCartRouter);
+
+const adminRouter = require('./admin');
+apiRouter.use('/admin', adminRouter);
 
 apiRouter.use('/', async (req, res) => {
   try {

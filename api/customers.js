@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 
 const { JWT_SECRET } = process.env;
 const { createCustomer, getCustomerByUsername, getAllCustomers } = require("../db/customers");
-const { requireUser } = require("./utils");
+const { requireAdmin} = require("./utils");
 
 // Customers
 customersRouter.post("/register", async (req, res, next) => {
@@ -106,7 +106,7 @@ customersRouter.post("/login", async (req, res, next) => {
   }
 });
 
-customersRouter.get("/manage_customers", async (req, res, next) => {
+customersRouter.get("/manage_customers", requireAdmin, async (req, res, next) => {
   try {
     const customers = await getAllCustomers();
     res.send(customers);
