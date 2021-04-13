@@ -55,6 +55,5 @@ CREATE TABLE orders (
   "orderId" INTEGER REFERENCES customers(id) NOT NULL,
   "productId" INTEGER REFERENCES products(id),
   status VARCHAR(255) NOT NULL,
-  quantity INTEGER,
-  subtotal VARCHAR(255) NOT NULL
+  quantity INTEGER
 );

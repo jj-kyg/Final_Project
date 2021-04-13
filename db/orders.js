@@ -64,9 +64,16 @@ async function getOrdersByCustomer(customerId) {
   try {
     const { rows } = await client.query(`
       SELECT * FROM orders
-      WHERE "orderId"=${customerId};
+      JOIN products ON orders."productId"=products.id AND orders."orderId"=${customerId};
     `);
 
+    rows.forEach((order) => {
+      delete order.description;
+      delete order.featured;
+      delete order.img;
+      delete order.artist;
+    })
+   
     return rows;
   } catch (error) {
     throw error;
