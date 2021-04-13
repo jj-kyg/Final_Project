@@ -50,7 +50,7 @@ async function deleteOrder(id){
   try{
     const { rows: [ deletedOrder ] } = await client.query(`
       DELETE FROM orders
-      WHERE id=$1
+      WHERE "orderId"=$1
       RETURNING *;
     `, [id]);
     console.log(deletedOrder);

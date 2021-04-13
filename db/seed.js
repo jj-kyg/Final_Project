@@ -62,7 +62,7 @@ async function testdB() {
     console.log("getCustomerById", customer);
 
     console.log("Calling deleteOrder");
-    const deletedOrder = await deleteOrder(4);
+    const deletedOrder = await deleteOrder(2);
     console.log("deleteOrder", deletedOrder);
     console.log("Finished database tests!");
   } catch (error) {
