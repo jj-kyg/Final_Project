@@ -1,36 +1,60 @@
-CREATE TABLE items (
+CREATE TABLE customers (
   id SERIAL PRIMARY KEY,
-  isActive Boolean,
+  username VARCHAR(255) UNIQUE NOT NULL,
+  "firstName" VARCHAR(50) NOT NULL,
+  "lastName" VARCHAR(50) DEFAULT '',
+  email VARCHAR(255) UNIQUE NOT NULL,
+  password VARCHAR(50) NOT NULL,
+  address VARCHAR(255) DEFAULT '',
+  postal INTEGER,
+  city VARCHAR(255) DEFAULT '',
+  phone VARCHAR(255) DEFAULT '',
+  "isActive" BOOLEAN DEFAULT 'true',
+  "isAdmin" Boolean DEFAULT 'false'
+);
+
+CREATE TABLE products (
+  id SERIAL PRIMARY KEY,
+  "isActive" BOOLEAN DEFAULT true,
   name VARCHAR(255) UNIQUE NOT NULL,
-  description VARCHAR(255),
-  cost INTEGER NOT NULL,
-  featured Boolean NOT NULL,
-  onHand INTEGER NOT NULL,
-  keywords VARCHAR(255) UNIQUE NOT NULL,
-  category VARCHAR(255) NOT NULL,
-  photos VARCHAR(255) UNIQUE NOT NULL
-)
+  img VARCHAR(255),
+  description TEXT,
+  price VARCHAR(255) NOT NULL,
+  featured BOOLEAN DEFAULT false,
+  stock INTEGER NOT NULL
+);
 
 CREATE TABLE reviews (
   id SERIAL PRIMARY KEY,
-  reviewId INTEGER NOT NULL,
-  name VARCHAR(255) UNIQUE NOT NULL,
-  rating INTEGER
-)
+  username VARCHAR(255) REFERENCES customers(username),
+  rating INTEGER,
+  description TEXT,
+  "reviewId" INTEGER REFERENCES products(id) NOT NULL
+);
 
-CREATE TABLE users (
+CREATE TABLE categories (
   id SERIAL PRIMARY KEY,
-  username VARCHAR(255) UNIQUE NOT NULL,
-  name VARCHAR(255) NOT NULL,
-  isActive Boolean,
-  isAdmin Boolean,
-  email VARCHAR(255) UNIQUE NOT NULL,
-  password VARCHAR(255) NOT NULL,
-)
+  "categoryId" INTEGER REFERENCES products(id),
+  "categoryName" VARCHAR(255) NOT NULL,
+  description VARCHAR(255)
+);
+
+ CREATE TABLE keywords (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) UNIQUE NOT NULL
+  );
+    
+CREATE TABLE product_keywords (
+  "productId" INTEGER REFERENCES products(id),
+  "keywordId" INTEGER REFERENCES keywords(id),
+  UNIQUE ("productId", "keywordId")
+);
 
 CREATE TABLE orders (
   id SERIAL PRIMARY KEY,
-  itemNumber INTEGER NOT NULL,
-  quantity INTEGER NOT NULL,
-  cost INTEGER NOT NULL,
-)
+  "orderId" INTEGER REFERENCES customers(id) NOT NULL,
+  "productId" INTEGER REFERENCES products(id),
+  status VARCHAR(255) NOT NULL,
+  quantity INTEGER,
+  subtotal VARCHAR(255) NOT NULL
+);
