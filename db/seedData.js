@@ -64,7 +64,7 @@ async function createTables() {
       "productId" INTEGER REFERENCES products(id),
       status VARCHAR(255) NOT NULL,
       quantity INTEGER,
-      serialNo INTEGER UNIQUE NOT NULL
+      serialno INTEGER UNIQUE NOT NULL
     );
 
     CREATE TABLE reviews (

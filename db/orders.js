@@ -5,14 +5,14 @@ async function createOrder({
   productId,
   status,
   quantity,
-  serialNo = Math.round(100000000 * Math.random())
+  serialno = Math.round(100000000 * Math.random())
 }) {
   try {
     const { rows: [order] } = await client.query(`
-      INSERT INTO orders ("orderId", "productId", status, quantity, serialNo)
+      INSERT INTO orders ("orderId", "productId", status, quantity, serialno)
       VALUES ($1, $2, $3, $4, $5)
       RETURNING *;
-    `, [orderId, productId, status, quantity, serialNo]);
+    `, [orderId, productId, status, quantity, serialno]);
     return order;
   } catch (error) {
     throw error;
@@ -65,7 +65,7 @@ async function deleteOrderBySerialNo(number){
   try{
     const { rows: [ deletedOrder ] } = await client.query(`
       DELETE FROM orders
-      WHERE "serialNo"=$1
+      WHERE "serialno"=$1
       RETURNING *;
     `, [number]);
     console.log(deletedOrder);

@@ -24,11 +24,11 @@ shoppingCartRouter.patch("/:orderId", async (req, res, next) => {
   }
 });
 
-shoppingCartRouter.delete('/:serialNo', async(req, res, next) => {
-  const { serialNo } = req.params; 
+shoppingCartRouter.delete('/:serialno', async(req, res, next) => {
+  const { serialno } = req.params; 
   try {
-    const deletedOrder = await deleteOrderBySerialNo(serialNo);
-    res.send(`${deletedOrder.serialNo} has been deleted`);
+    const deletedOrder = await deleteOrderBySerialNo(serialno);
+    res.send(`${deletedOrder.serialno} has been deleted`);
   } catch (error) {
     next(error);
   }
