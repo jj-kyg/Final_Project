@@ -1,9 +1,9 @@
-function requireUser(req, res, next) {
-  if (!req.user) {
+function requireCustomer(req, res, next) {
+  if (!req.customer) {
     res.status(401)
     next({
       name: "MissingUserError",
-      message: "You must be logged in perform this action"
+      message: "You must be logged in to perform this action"
     });
   }
   
@@ -11,11 +11,11 @@ function requireUser(req, res, next) {
 }
 
 function requireAdmin(req, res, next) {
-  if (!req.user) {
+  if (!req.customer.isAdmin) {
     res.status(401)
     next({
       name: "MissingUserError",
-      message: "You must be logged in asAdmin perform this action"
+      message: "You must be logged in as an Admin to perform this action"
     });
   }
   
@@ -23,5 +23,6 @@ function requireAdmin(req, res, next) {
 }
 
 module.exports = {
-  requireUser
+  requireCustomer,
+  requireAdmin
 }
