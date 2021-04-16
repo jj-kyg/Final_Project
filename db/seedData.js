@@ -64,7 +64,7 @@ async function createTables() {
       "productId" INTEGER REFERENCES products(id),
       status VARCHAR(255) NOT NULL,
       quantity INTEGER,
-      subtotal VARCHAR(255) NOT NULL
+      serialno INTEGER UNIQUE NOT NULL
     );
 
     CREATE TABLE reviews (
@@ -270,29 +270,25 @@ async function createInitialOrders() {
       orderId: 2,
       productId: 8,
       status: "created",
-      quantity: 1,
-      subtotal: "$1809.00"
+      quantity: 1
     });
     await createOrder({
       orderId: 1,
       productId: 7,
       status: "processing",
-      quantity: 2,
-      subtotal: "$1450.00"
+      quantity: 2
     });
     await createOrder({
       orderId: 1,
       productId: 4,
       status: "cancelled",
-      quantity: 1,
-      subtotal: "$1809.00"
+      quantity: 1
     });
     await createOrder({
       orderId: 2,
       productId: 3,
       status: "completed",
-      quantity: 1,
-      subtotal: "$1120.00"
+      quantity: 1
     });
   } catch (error) {
     console.error("Error creating orders!");

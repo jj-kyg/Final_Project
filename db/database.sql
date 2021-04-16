@@ -56,5 +56,5 @@ CREATE TABLE orders (
   "productId" INTEGER REFERENCES products(id),
   status VARCHAR(255) NOT NULL,
   quantity INTEGER,
-  subtotal VARCHAR(255) NOT NULL
+  serialNo INTEGER UNIQUE NOT NULL
 );

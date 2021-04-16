@@ -1,7 +1,27 @@
 const express = require("express");
 const ordersRouter = express.Router();
-const {getOrdersByCustomer, deleteOrder} = require('../db');
+const {getOrdersByCustomer, deleteOrder, createOrder} = require('../db');
 const { requireCustomer } = require("./utils");
+
+ordersRouter.post('/', async (req, res) => {
+  const {
+    orderId,
+    productId,
+    status,
+    quantity
+  } = req.body;
+  try {
+    const order = await createOrder({
+      orderId,
+      productId,
+      status,
+      quantity
+    });
+    res.send(order);
+  } catch (error) {
+    throw(error);
+  }
+});
 
 ordersRouter.get('/:customerId', async (req, res) => {
   const { customerId } = req.params;

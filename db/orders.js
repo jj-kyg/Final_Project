@@ -5,14 +5,14 @@ async function createOrder({
   productId,
   status,
   quantity,
-  subtotal
+  serialno = Math.round(100000000 * Math.random())
 }) {
   try {
     const { rows: [order] } = await client.query(`
-      INSERT INTO orders ("orderId", "productId", status, quantity, subtotal)
+      INSERT INTO orders ("orderId", "productId", status, quantity, serialno)
       VALUES ($1, $2, $3, $4, $5)
       RETURNING *;
-    `, [orderId, productId, status, quantity, subtotal]);
+    `, [orderId, productId, status, quantity, serialno]);
     return order;
   } catch (error) {
     throw error;
@@ -51,9 +51,23 @@ async function deleteOrder(id){
   try{
     const { rows: [ deletedOrder ] } = await client.query(`
       DELETE FROM orders
-      WHERE id=$1
+      WHERE "orderId"=$1
       RETURNING *;
     `, [id]);
+    console.log(deletedOrder);
+    return deletedOrder; 
+  } catch (error){
+    throw (error)
+  }
+}
+
+async function deleteOrderBySerialNo(number){
+  try{
+    const { rows: [ deletedOrder ] } = await client.query(`
+      DELETE FROM orders
+      WHERE "serialno"=$1
+      RETURNING *;
+    `, [number]);
     console.log(deletedOrder);
     return deletedOrder; 
   } catch (error){
@@ -65,9 +79,16 @@ async function getOrdersByCustomer(customerId) {
   try {
     const { rows } = await client.query(`
       SELECT * FROM orders
-      WHERE "orderId"=${customerId};
+      JOIN products ON orders."productId"=products.id AND orders."orderId"=${customerId};
     `);
 
+    rows.forEach((order) => {
+      delete order.description;
+      delete order.featured;
+      delete order.img;
+      delete order.artist;
+    })
+   
     return rows;
   } catch (error) {
     throw error;
@@ -91,5 +112,6 @@ module.exports = {
   updateOrder, 
   deleteOrder,
   getAllOrders,
-  getOrdersByCustomer
+  getOrdersByCustomer,
+  deleteOrderBySerialNo
 };

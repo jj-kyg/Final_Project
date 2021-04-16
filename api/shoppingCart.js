@@ -1,6 +1,6 @@
 const express = require("express");
 const shoppingCartRouter = express.Router();
-const { getOrdersByCustomer, updateOrder } = require('../db');
+const { getOrdersByCustomer, updateOrder, deleteOrderBySerialNo } = require('../db');
 
 shoppingCartRouter.get('/:customerId', async (req, res) => {
   const { customerId } = req.params;
@@ -24,11 +24,11 @@ shoppingCartRouter.patch("/:orderId", async (req, res, next) => {
   }
 });
 
-shoppingCartRouter.delete('/:orderId', async(req, res, next) => {
-  const { orderId } = req.params 
+shoppingCartRouter.delete('/:serialno', async(req, res, next) => {
+  const { serialno } = req.params; 
   try {
-    const deletedOrder = await deleteOrder(orderId);
-    res.send(deletedOrder);
+    const deletedOrder = await deleteOrderBySerialNo(serialno);
+    res.send(`${deletedOrder.serialno} has been deleted`);
   } catch (error) {
     next(error);
   }

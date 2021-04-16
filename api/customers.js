@@ -3,8 +3,8 @@ const customersRouter = express.Router();
 const jwt = require("jsonwebtoken");
 
 const { JWT_SECRET } = process.env;
-const { createCustomer, getCustomerByUsername, getAllCustomers } = require("../db/customers");
-const { requireAdmin} = require("./utils");
+const { createCustomer, getCustomerByUsername, getAllCustomers, updateCustomer } = require("../db/customers");
+const { requireAdmin, requireCustomer} = require("./utils");
 
 // Customers
 customersRouter.post("/register", async (req, res, next) => {
@@ -112,6 +112,18 @@ customersRouter.get("/manage_customers", requireAdmin, async (req, res, next) =>
     res.send(customers);
   } catch (error) {
     throw(error);
+  }
+});
+
+customersRouter.patch("/:id", requireCustomer, async (req, res, next) => {
+  const { id } = req.params;
+  console.log(id);
+  try {
+    const customer = await updateCustomer(id, req.body);
+    console.log(customer)
+    res.send(customer);
+  } catch (error) {
+    throw(error)
   }
 });
 
