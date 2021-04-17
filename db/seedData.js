@@ -166,7 +166,7 @@ async function createInitialProducts() {
       description:
         "The year 1905 saw the final collapse of the blue pallet in I Picasso's work, as greys and then warm reds were gradually allowed to seep back into the range during the year. His repertoire of thin, gaunt female figures is joined by a troupe of other circus personalities. Fun and optimism, instead of melancholia and social alienation, return as subject matter, though depictions of entertainment are still moderated by the inherent social out-casting of the circus community.",
       img:
-        "https://www.linkpicture.com/q/young-acrobat-on-a-ball.jpg",
+        "https://www.pablopicasso.org/images/paintings/young-acrobat-on-a-ball.jpg",
       price: "$1905.00",
       featured: true,
       stock: 5,
@@ -176,7 +176,7 @@ async function createInitialProducts() {
       name: "Two Heads On Gold",
       artist: "Jean Michel Basquiat",
       img:
-        "https://trendland.com/wp-content/uploads/2013/02/jean-michel-basquiat-opening-at-gagosian-gallery-02.jpg",
+        "https://d7hftxdivxxvm.cloudfront.net/?resize_to=width&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FmpXphO8ESt7rbhmUTUk3_Q%2Flarger.jpg&width=1200&quality=80",
       description:
         "Untitled (Two Heads on Gold), 1982, is a monumental diptych, more than ten feet wide. It is a double portrait of a skeletal, black man with staring eyes and bared teeth. Rage and fear power the composition, threatening to burst through the enforced stillness of the two figures and engulf the viewer.",
       price: "$1899.00",
