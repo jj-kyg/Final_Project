@@ -180,7 +180,7 @@ async function createInitialProducts() {
       description:
         "Untitled (Two Heads on Gold), 1982, is a monumental diptych, more than ten feet wide. It is a double portrait of a skeletal, black man with staring eyes and bared teeth. Rage and fear power the composition, threatening to burst through the enforced stillness of the two figures and engulf the viewer.",
       price: "$1899.00",
-      featured: true,
+      featured: false,
       stock: 7,
     });
     await createProduct({
@@ -202,7 +202,7 @@ async function createInitialProducts() {
       description:
         "Basquiat was a charismatic, passionate artist, which is captured in the piercing gaze of this self-portrait. This is a portrait of a confident man, who know what he wanted to say to the world through his art. Painted with acrylic paint on an unframed canvas using a palette knife, the image uses texture to crackle with life.",
       price: "$870.00",
-      featured: true,
+      featured: false,
       stock: 3,
     });
     await createProduct({
@@ -224,7 +224,7 @@ async function createInitialProducts() {
       description:
         "Renowned for his posters, Czech artist Alfons Mucha became an international star when his posters featuring Sarah Bernhardt were released. His visual language is characteristic of art nouveau, interspersed with floral patterns and curved lines. His Native American in Flowers and Feathers saw Mucha branching out into the realist realm.",
       price: "$250.00",
-      featured: false,
+      featured: true,
       stock: 5,
     });
     await createProduct({
