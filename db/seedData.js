@@ -224,7 +224,7 @@ async function createInitialProducts() {
       description:
         "Renowned for his posters, Czech artist Alfons Mucha became an international star when his posters featuring Sarah Bernhardt were released. His visual language is characteristic of art nouveau, interspersed with floral patterns and curved lines. His Native American in Flowers and Feathers saw Mucha branching out into the realist realm.",
       price: "$250.00",
-      featured: true,
+      featured: false,
       stock: 5,
     });
     await createProduct({
