@@ -156,7 +156,7 @@ async function createInitialProducts() {
       img:
         "https://www.pablopicasso.org/images/paintings/the-weeping-woman.jpg",
       price: "$1937.00",
-      featured: true,
+      featured: false,
       stock: 5,
     });
     await createProduct({
@@ -168,7 +168,7 @@ async function createInitialProducts() {
       img:
         "https://www.pablopicasso.org/images/paintings/young-acrobat-on-a-ball.jpg",
       price: "$1905.00",
-      featured: true,
+      featured: false,
       stock: 5,
     });
     await createProduct({
@@ -191,7 +191,7 @@ async function createInitialProducts() {
       description:
         "Edward Hopper was one of the early American artists to paint the experience of human isolation in the modern city. In Morning Sun, the woman – modeled after Hopper’s wife, Jo – faces the sun impassively and seemingly lost in thought. Her visible right eye appears sightless, emphasizing her isolation. The bare wall and elevation of the room above the street also suggest the bleakness and solitude of impersonal urban life.",
       price: "$590.00",
-      featured: false,
+      featured: true,
       stock: 11,
     });
     await createProduct({
@@ -202,7 +202,7 @@ async function createInitialProducts() {
       description:
         "Basquiat was a charismatic, passionate artist, which is captured in the piercing gaze of this self-portrait. This is a portrait of a confident man, who know what he wanted to say to the world through his art. Painted with acrylic paint on an unframed canvas using a palette knife, the image uses texture to crackle with life.",
       price: "$870.00",
-      featured: false,
+      featured: true,
       stock: 3,
     });
     await createProduct({
@@ -244,7 +244,7 @@ async function createInitialProducts() {
       artist: "James Ensor",
       img: "https://i.redd.it/vi4pcl0lvls41.jpg",
       description:
-        "Weeping Woman is based on an image of a woman holding her dead child. It is taken from Picasso’s anti-war mural, Guernica. Picasso painted both works during the Spanish Civil War (1936-39). It was in response to the bombing of the Basque town of Guernica. The attack was carried out in April 1937 by Nazi Germany’s air force, in support of Spain’s Nationalist forces. Hundreds of people were killed. The figure of the Weeping Woman is based on artist and photographer Dora Maar. Maar photographed Picasso’s making of Guernica.",
+        "The Intrigue is an oil on canvas painting created by Belgian expressionist painter James Ensor. This painting is in the possession of Royal Museum of Fine Arts Antwerp and is part of the official inventory of Flemish masterpieces. The use of masks in Ensor's paintings is prevalent.",
       price: "$1937.00",
       featured: true,
       stock: 5,
