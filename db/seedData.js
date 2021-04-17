@@ -166,7 +166,7 @@ async function createInitialProducts() {
       description:
         "The year 1905 saw the final collapse of the blue pallet in I Picasso's work, as greys and then warm reds were gradually allowed to seep back into the range during the year. His repertoire of thin, gaunt female figures is joined by a troupe of other circus personalities. Fun and optimism, instead of melancholia and social alienation, return as subject matter, though depictions of entertainment are still moderated by the inherent social out-casting of the circus community.",
       img:
-        "https://imgur.com/tXfQhk6",
+        "https://www.linkpicture.com/q/young-acrobat-on-a-ball.jpg",
       price: "$1905.00",
       featured: true,
       stock: 5,
