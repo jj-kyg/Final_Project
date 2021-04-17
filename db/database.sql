@@ -58,3 +58,14 @@ CREATE TABLE orders (
   quantity INTEGER,
   serialNo INTEGER UNIQUE NOT NULL
 );
+
+CREATE TABLE submitted_orders (
+  id SERIAL PRIMARY KEY,
+  "orderId" INTEGER REFERENCES customers(id) NOT NULL,
+  username VARCHAR(255) REFERENCES customers(username),
+  email VARCHAR(255) REFERENCES customers(email),
+  "productId" INTEGER REFERENCES products(id),
+  status VARCHAR(255) NOT NULL,
+  quantity INTEGER,
+  serialNo INTEGER UNIQUE NOT NULL
+);
