@@ -243,6 +243,7 @@ async function createInitialProducts() {
       isActive: true,
       name: "The Beautyful Ones",
       artist: "Njideka Akunyili Crosby",
+      img: "http://www.njidekaakunyilicrosby.com/wp-content/uploads/2013/10/Beautyful-Ones-1C-by-JWP-cropped-1000x1436.jpg",
       description: "Nigerian-born, Los Angeles–based artist Njideka Akunyili Crosby's (born 1983) figurative painting at first appears to be a painting of an quotidian indoor scene inspired by the artist's personal photograph of a friend or family member in Nigeria. But on closer inspection, it becomes clear that large segments of this painting are composed of collages, themselves created from personal photos and images taken from Nigerian magazines.",
       price: "$30000.00",
       featured: true,
