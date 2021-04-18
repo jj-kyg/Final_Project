@@ -161,6 +161,29 @@ async function createInitialProducts() {
     });
     await createProduct({
       isActive: true,
+      name: "The Intrigue",
+      artist: "James Ensor",
+      img: "https://i.redd.it/vi4pcl0lvls41.jpg",
+      description:
+        "The Intrigue is an oil on canvas painting created by Belgian expressionist painter James Ensor. This painting is in the possession of Royal Museum of Fine Arts Antwerp and is part of the official inventory of Flemish masterpieces. The use of masks in Ensor's paintings is prevalent.",
+      price: "$1937.00",
+      featured: true,
+      stock: 5,
+      keywords: ["yellows", "oil"],
+    });
+    await createProduct({
+      isActive: true,
+      name: "Masks Watching Turtle",
+      artist: "James Ensor",
+      img: "https://i.redd.it/6glzux8uzzp41.jpg",
+      description:
+        "Subjects such as carnivals, masks, puppetry, skeletons, and fantastic allegories are dominant in Ensor’s mature work. Ensor dressed skeletons up in his studio and arranged them in colorful, enigmatic tableaux on the canvas, and used masks as a theatrical aspect in his still life paintings. Attracted by masks’ plastic forms, bright colors, and potential for psychological impact, he created a format in which he could paint with complete freedom. For Ensor, while the mask hides the identity of individuals it nevertheless exposes the wearer’s true personality – malicious, giddy, foolish. It is not, in this sense, a mask at all. “Masks” is one of the finest represenations of Ensor’s work.",
+      price: "$1099.00",
+      featured: true,
+      stock: 5,
+    });
+    await createProduct({
+      isActive: true,
       name: "Young Acrobat on a Ball",
       artist: "Pablo Picasso",
       description:
@@ -182,17 +205,6 @@ async function createInitialProducts() {
       price: "$1899.00",
       featured: false,
       stock: 7,
-    });
-    await createProduct({
-      isActive: true,
-      name: "Morning Sun",
-      artist: "Edward Hopper",
-      img: "https://i.redd.it/pgs666pq69e61.jpg",
-      description:
-        "Edward Hopper was one of the early American artists to paint the experience of human isolation in the modern city. In Morning Sun, the woman – modeled after Hopper’s wife, Jo – faces the sun impassively and seemingly lost in thought. Her visible right eye appears sightless, emphasizing her isolation. The bare wall and elevation of the room above the street also suggest the bleakness and solitude of impersonal urban life.",
-      price: "$590.00",
-      featured: true,
-      stock: 11,
     });
     await createProduct({
       isActive: true,
@@ -229,26 +241,23 @@ async function createInitialProducts() {
     });
     await createProduct({
       isActive: true,
-      name: "Masks Watching Turtle",
-      artist: "James Ensor",
-      img: "https://i.redd.it/6glzux8uzzp41.jpg",
-      description:
-        "Subjects such as carnivals, masks, puppetry, skeletons, and fantastic allegories are dominant in Ensor’s mature work. Ensor dressed skeletons up in his studio and arranged them in colorful, enigmatic tableaux on the canvas, and used masks as a theatrical aspect in his still life paintings. Attracted by masks’ plastic forms, bright colors, and potential for psychological impact, he created a format in which he could paint with complete freedom. For Ensor, while the mask hides the identity of individuals it nevertheless exposes the wearer’s true personality – malicious, giddy, foolish. It is not, in this sense, a mask at all. “Masks” is one of the finest represenations of Ensor’s work.",
-      price: "$1099.00",
+      name: "The Beautyful Ones",
+      artist: "Njideka Akunyili Crosby",
+      description: "Nigerian-born, Los Angeles–based artist Njideka Akunyili Crosby's (born 1983) figurative painting at first appears to be a painting of an quotidian indoor scene inspired by the artist's personal photograph of a friend or family member in Nigeria. But on closer inspection, it becomes clear that large segments of this painting are composed of collages, themselves created from personal photos and images taken from Nigerian magazines.",
+      price: "$30000.00",
       featured: true,
-      stock: 5,
-    });
+      stock: 2,
+    })
     await createProduct({
       isActive: true,
-      name: "The Intrigue",
-      artist: "James Ensor",
-      img: "https://i.redd.it/vi4pcl0lvls41.jpg",
+      name: "Morning Sun",
+      artist: "Edward Hopper",
+      img: "https://i.redd.it/pgs666pq69e61.jpg",
       description:
-        "The Intrigue is an oil on canvas painting created by Belgian expressionist painter James Ensor. This painting is in the possession of Royal Museum of Fine Arts Antwerp and is part of the official inventory of Flemish masterpieces. The use of masks in Ensor's paintings is prevalent.",
-      price: "$1937.00",
+        "Edward Hopper was one of the early American artists to paint the experience of human isolation in the modern city. In Morning Sun, the woman – modeled after Hopper’s wife, Jo – faces the sun impassively and seemingly lost in thought. Her visible right eye appears sightless, emphasizing her isolation. The bare wall and elevation of the room above the street also suggest the bleakness and solitude of impersonal urban life.",
+      price: "$590.00",
       featured: true,
-      stock: 5,
-      keywords: ["yellows", "oil"],
+      stock: 11,
     });
 
     console.log("Finished creating products!");
