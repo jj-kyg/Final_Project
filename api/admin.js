@@ -1,6 +1,6 @@
 const express = require("express");
 const adminRouter = express.Router();
-const {getAllOrders, getOrdersByCustomer, deleteOrder, updateOrder, updateCustomer} = require('../db');
+const {getAllOrders, getOrdersByCustomer, deleteOrder, updateProduct, updateCustomer} = require('../db');
 const { requireAdmin } = require("./utils");
 
 adminRouter.get('/', requireAdmin, async (req, res) => {
@@ -33,12 +33,12 @@ adminRouter.get('/order_summary/:customerId', requireAdmin, async(req, res, next
   }
 });
 
-adminRouter.patch("/:orderId", requireAdmin, async (req, res, next) => {
-  const { orderId } = req.params;
+adminRouter.patch("/:productId", requireAdmin, async (req, res, next) => {
+  const { productId } = req.params;
 
   try {
-    const updatedOrder = await updateOrder(orderId, req.body);
-    res.send(updatedOrder);
+    const updatedProduct = await updateProduct(productId, req.body);
+    res.send(updatedProduct);
   } catch (error) {
     console.log(error);
     next(error);

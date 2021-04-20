@@ -19,6 +19,27 @@ async function createOrder({
   }
 }
 
+async function createSubmittedOrder({
+  orderId,
+  productId,
+  username,
+  email,
+  status,
+  quantity,
+  serialno = Math.round(100000000 * Math.random())
+}) {
+  try {
+    const { rows: [order] } = await client.query(`
+      INSERT INTO submitted_orders ("orderId", "productId", username, email, status, quantity, serialno)
+      VALUES ($1, $2, $3, $4, $5, $6, $7)
+      RETURNING *;
+    `, [orderId, productId, username, email, status, quantity, serialno]);
+    return order;
+  } catch (error) {
+    throw error;
+  }
+}
+
 async function updateOrder(id, fields = {}) {
   const setString = Object.keys(fields)
     .map((key, index) => `"${key}"=$${index + 1}`)
@@ -113,5 +134,6 @@ module.exports = {
   deleteOrder,
   getAllOrders,
   getOrdersByCustomer,
-  deleteOrderBySerialNo
+  deleteOrderBySerialNo,
+  createSubmittedOrder
 };

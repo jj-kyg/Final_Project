@@ -1,45 +1,52 @@
 const express = require("express");
 const ordersRouter = express.Router();
-const {getOrdersByCustomer, deleteOrder, createOrder} = require('../db');
+const {
+  getOrdersByCustomer,
+  deleteOrder,
+  createOrder,
+  createSubmittedOrder,
+} = require("../db");
 const { requireCustomer } = require("./utils");
 
-ordersRouter.post('/', async (req, res) => {
-  const {
-    orderId,
-    productId,
-    status,
-    quantity
-  } = req.body;
+ordersRouter.post("/", async (req, res) => {
+  const { orderId, productId, status, quantity } = req.body;
   try {
     const order = await createOrder({
       orderId,
       productId,
       status,
-      quantity
+      quantity,
     });
     res.send(order);
   } catch (error) {
-    throw(error);
+    throw error;
   }
 });
 
-ordersRouter.get('/:customerId', async (req, res) => {
+ordersRouter.get("/:customerId", async (req, res) => {
   const { customerId } = req.params;
   try {
     const orders = await getOrdersByCustomer(customerId);
     res.send(orders);
   } catch (error) {
-    throw(error);
+    throw error;
   }
 });
 
-ordersRouter.get('/order_summary/:customerId', requireCustomer, async(req, res, next) => {
-  const { customerId } = req.params;
+ordersRouter.post("/checkout/", requireCustomer, async (req, res, next) => {
+  const { orderId, productId, username, email, status, quantity } = req.body;
   try {
-    const orderSummary = await getOrdersByCustomer(customerId);
-    res.send(orderSummary);
+    const submittedOrder = await createSubmittedOrder({
+      orderId,
+      productId,
+      username,
+      email,
+      status,
+      quantity
+    });
+    res.send(submittedOrder);
   } catch (error) {
-    throw(error);
+    throw error;
   }
 });
 
@@ -54,8 +61,8 @@ ordersRouter.patch("/:orderId", async (req, res, next) => {
   }
 });
 
-ordersRouter.delete('/:orderId', async(req, res, next) => {
-  const { orderId } = req.params 
+ordersRouter.delete("/:orderId", async (req, res, next) => {
+  const { orderId } = req.params;
   try {
     const deletedOrder = await deleteOrder(orderId);
     res.send(deletedOrder);
@@ -63,6 +70,5 @@ ordersRouter.delete('/:orderId', async(req, res, next) => {
     next(error);
   }
 });
-
 
 module.exports = ordersRouter;
